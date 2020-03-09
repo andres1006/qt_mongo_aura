@@ -267,7 +267,7 @@ public slots:
     void setClbFileName(const QString path){
         m_clbBaseName = verifyDat(path);
         m_clbFullName = path + "/" + m_clbBaseName;
-        qDebug()<<Q_FUNC_INFO<<" -> m_csvClb: "<<m_csvClb<<", m_clbBaseName: "<<m_clbBaseName<<", m_clbFullName: "<<m_clbFullName;
+        //qDebug()<<Q_FUNC_INFO<<" -> m_csvClb: "<<m_csvClb<<", m_clbBaseName: "<<m_clbBaseName<<", m_clbFullName: "<<m_clbFullName;
     }
     void setTstFileName(const QString path){
         m_tstBaseName = verifyDat(path);

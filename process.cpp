@@ -19,9 +19,9 @@
 process::process(QObject *parent) : QObject(parent){}
 
 void process::sendToDB(OData *data, QString sessionName, QString testName, QString mongoUrl, unsigned int mongoPort){
-    qDebug()<<"------------------------------------------------------------------Start Funcion: "<<Q_FUNC_INFO;
+    //qDebug()<<"------------------------------------------------------------------Start Funcion: "<<Q_FUNC_INFO;
     Logger::instance().log(" Sending to Mongo", Logger::kLogLevelDebug);
-    qDebug()<<Q_FUNC_INFO<<" Sending to Mongo sessionName: "<<sessionName<<", testName: "<<testName;
+    //qDebug()<<Q_FUNC_INFO<<" Sending to Mongo sessionName: "<<sessionName<<", testName: "<<testName;
     try{
         //MONGO(Begin)
         arrTime.clear();
@@ -37,53 +37,53 @@ void process::sendToDB(OData *data, QString sessionName, QString testName, QStri
         arrStimulusY.clear();
 
         //MONGO(End)
-        qDebug()<<"Step -1";
-        qDebug()<<data->dataSize();
+        //qDebug()<<"Step -1";
+        //qDebug()<<data->dataSize();
         for(int i=0;i<data->dataSize();i++){
-            qDebug()<<"Step 0 ";
-            qDebug()<<data->dataSize();
+            //qDebug()<<"Step 0 ";
+            //qDebug()<<data->dataSize();
             arrTime<<data->m_processedData[i].time(); //TIEMPO
-            qDebug()<<"Step 0.1 ";
+            //qDebug()<<"Step 0.1 ";
             arrGazeX<<data->m_processedData[i].x();
-            qDebug()<<"Step 0.2 ";
+            //qDebug()<<"Step 0.2 ";
             arrGazeY<<data->m_processedData[i].y(); //GAZE EN DEG
-            qDebug()<<"Step 0.3 ";
+            //qDebug()<<"Step 0.3 ";
             arrStimulusX<<data->m_processedData[i].xS();
-            qDebug()<<"Step 0.4 ";
+            //qDebug()<<"Step 0.4 ";
             arrStimulusY<<data->m_processedData[i].yS(); //ESTIMULO EN DEG
-            qDebug()<<"Step 0.5 ";
-            qDebug()<<data->m_processedDataExtra.size();
+            //qDebug()<<"Step 0.5 ";
+            //qDebug()<<data->m_processedDataExtra.size();
             arrGazeVelocityX<<data->m_processedDataExtra[i].getVel().x();
-            qDebug()<<"Step 0.6 ";
+            //qDebug()<<"Step 0.6 ";
             arrGazeVelocityY<<data->m_processedDataExtra[i].getVel().y(); //GAZEVEL EN DEG
-            qDebug()<<"Step 0.7 ";
+            //qDebug()<<"Step 0.7 ";
             arrArea<<data->m_processedData[i].area(); //AREA PUPILA
-            qDebug()<<"Step 0.8 ";
+            //qDebug()<<"Step 0.8 ";
             arrGazeRawX<<data->m_processedDataExtra[i].getPosRaw().x();
-            qDebug()<<"Step 0.9 ";
+            //qDebug()<<"Step 0.9 ";
             arrGazeRawY<<data->m_processedDataExtra[i].getPosRaw().y(); //GAZE SIN FILTRAR
-            qDebug()<<"Step 0.10 ";
+            //qDebug()<<"Step 0.10 ";
             arrBlinks<<data->m_processedData[i].getParpadeo();
             //stream<<data->m_processedData[i].valid()<<endl;
-             qDebug()<<"Step 1";
+             //qDebug()<<"Step 1";
         }
-        qDebug()<<"Step 2";
+        //qDebug()<<"Step 2";
 
         //mongocxx::client client(mongocxx::uri(QString("mongodb://oscann:CuevaErikSilviaPablo@%1:%2/?authSource=admin&authMechanism=SCRAM-SHA-1").arg(mongoUrl).arg(mongoPort).toLatin1().data()));
         mongocxx::client client(mongocxx::uri("mongodb://localhost:27017"));
-        qDebug()<<"Step 3";
+        //qDebug()<<"Step 3";
         auto db = client["tests"];
-        qDebug()<<"Step 4";
+        //qDebug()<<"Step 4";
         if(testName[0] == 'T'){
-            qDebug()<<"Step 4.1";
+           // qDebug()<<"Step 4.1";
             if(testName.mid(0,4).compare("TASV") == 0)
                 testName.remove(3,1);;
             mongocxx::collection coll = db[testName.split("-")[0].toLatin1().data()];
-            qDebug()<<"Step 4.2";
+           // qDebug()<<"Step 4.2";
             auto builder = bsoncxx::builder::stream::document{};
             //NOTE: The document of the patient is deleted if it exists to avoid duplicated docs
             coll.delete_one(document{} << "patient" << sessionName.toLatin1().data() << bsoncxx::builder::stream::finalize);
-            qDebug()<<"Step 4.3";
+            //qDebug()<<"Step 4.3";
             std::tm tm;
             QString date = testName.split("-")[1];
             QString time = testName.split("-")[2];
@@ -126,7 +126,7 @@ void process::sendToDB(OData *data, QString sessionName, QString testName, QStri
                     << bsoncxx::builder::stream::finalize;
             bsoncxx::document::view view = doc_value.view();
             bsoncxx::stdx::optional<mongocxx::result::insert_one> result = coll.insert_one(view);
-            qDebug()<<"Step 5";
+           // qDebug()<<"Step 5";
         }
     }catch (mongocxx::exception &e) {
         std::cerr << "MONGO ERROR: "<<e.what()<<"\n";
@@ -158,7 +158,7 @@ void process::sendToDB(OData *data, QString sessionName, QString testName, QStri
   */
 int process::calculateGaze(OData *data, QString testName, QPoint resolution,double screenDistance,double screenWidth, bool visualization){
     //esta función rellena todos los campos de data
-    qDebug()<<"------------------------------------------------------------------Start Funcion: "<<Q_FUNC_INFO;
+   // qDebug()<<"------------------------------------------------------------------Start Funcion: "<<Q_FUNC_INFO;
     int i=0;
     int returnValue=1;                                                      //-1: Error, 0: Warning, 1: Success
      utilsProcess::resolution=resolution;

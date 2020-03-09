@@ -41,7 +41,7 @@ int OData::open(bool processing){
 }
 
 void OData::calculateMeanAndStd(){
-    qDebug()<<"---------------------------START FUNCTION: "<<Q_FUNC_INFO;
+    //qDebug()<<"---------------------------START FUNCTION: "<<Q_FUNC_INFO;
     double meanXAUX, meanYAUX, stdXAUX, stdYAUX;
     double meanX, meanY, stdX, stdY;
     meanXAUX = m_sumX/m_indices.length();
@@ -322,18 +322,18 @@ void OData::importCsv(){
     QFile file(m_csvFileName);
     QString decimal = ",";
     if(file.open(QIODevice::ReadOnly)){
-        qDebug()<<Q_FUNC_INFO<<" importing CSV: "<<m_csvFileName;
+       //qDebug()<<Q_FUNC_INFO<<" importing CSV: "<<m_csvFileName;
         QString line;
         QStringList elements;
         QTextStream qTS( &file );
         line = qTS.readLine();
-        qDebug()<<Q_FUNC_INFO<<" line: "<<line;
+        //qDebug()<<Q_FUNC_INFO<<" line: "<<line;
         //v4.0.12
         //elements = line.split(QLocale().decimalPoint());
         elements = line.split(decimal);
         //v4.0.12
         m_csvClb = elements[12];
-        qDebug()<<Q_FUNC_INFO<<" calibration of the test in csv it can be changed: "<<m_csvClb;
+        //qDebug()<<Q_FUNC_INFO<<" calibration of the test in csv it can be changed: "<<m_csvClb;
         line = qTS.readLine();
         line = qTS.readLine();
         m_processedData.clear();
@@ -357,9 +357,9 @@ void OData::importCsv(){
             extraData->setPosRaw(posRaw);
             m_processedDataExtra.push_back(*extraData);
             //qDebug()<<atof(elements[0].replace(".",QLocale().decimalPoint()).toLatin1().data());
-            qDebug()<<m_processedData.size();
+            //qDebug()<<m_processedData.size();
             line = qTS.readLine();
-            qDebug()<<Q_FUNC_INFO<<" line: "<<line;
+            //qDebug()<<Q_FUNC_INFO<<" line: "<<line;
         }
     }
 
@@ -370,17 +370,17 @@ void OData::exportCsv(){
     //Oscann 4.0.9: QFile file(m_testPath + "/" + m_testName + ".csv");
     //Oscann 4.0.9: if(file.open(QIODevice::WriteOnly)){
     if(m_csvFile->open(QIODevice::WriteOnly)){
-        qDebug()<<Q_FUNC_INFO<<" exporting CSV: "<<m_csvFile->fileName();
+        //qDebug()<<Q_FUNC_INFO<<" exporting CSV: "<<m_csvFile->fileName();
         //Oscann 4.0.9 QTextStream stream(&file);
         QTextStream stream(m_csvFile);
         utilsProcess::resolution=resolution;
         utilsProcess::sDist=sDist;
         utilsProcess::sWidth=sWidth;
-        qDebug()<<Q_FUNC_INFO<<" m_testPath: "<<m_testPath;
-        qDebug()<<Q_FUNC_INFO<<", m_testName: "<<m_testName;
-        qDebug()<<Q_FUNC_INFO<<", m_clbBaseName: "<<m_clbBaseName;
-        qDebug()<<Q_FUNC_INFO<<", Subject: "<<m_testPath.split("/")[m_testPath.split("/").size()-2];
-        qDebug()<<Q_FUNC_INFO<<", Calibration: "<<m_clbBaseName.split(".").at(0);
+        //qDebug()<<Q_FUNC_INFO<<" m_testPath: "<<m_testPath;
+        //qDebug()<<Q_FUNC_INFO<<", m_testName: "<<m_testName;
+        //qDebug()<<Q_FUNC_INFO<<", m_clbBaseName: "<<m_clbBaseName;
+        //qDebug()<<Q_FUNC_INFO<<", Subject: "<<m_testPath.split("/")[m_testPath.split("/").size()-2];
+        //qDebug()<<Q_FUNC_INFO<<", Calibration: "<<m_clbBaseName.split(".").at(0);
         stream<<"Resolution,"<<resolution.x()<<","<<resolution.y()<<",Distance,"<<sDist<<",Width,"<<sWidth
               <<",Subject,"<<m_testPath.split("/")[m_testPath.split("/").size()-2]<<",Test,"<<m_testName<<",Calibration,"<<m_clbBaseName.split(".").at(0)
               //Oscann 4.0.7
@@ -407,7 +407,7 @@ void OData::exportCsv(){
 }
 bool OData::removeTestFolder(QString testPath){
     QDir dir_patient(testPath);
-    qDebug()<<"patient path to delete: "<<testPath;
+    //qDebug()<<"patient path to delete: "<<testPath;
     if (dir_patient.removeRecursively())
         return true;
     else return false;
@@ -416,14 +416,14 @@ bool OData::removeTestFolder(QString testPath){
 
 QString OData::folderExistance(QString test_comprobar,QString patientSession){ //pasar solo el tipo de test: TSVV, TSMH,...
     QDir dir_patient(patientSession);//(getSessionName)
-    qDebug()<<"directorio del paciente: "<<patientSession<< "y numnero de archivos" <<dir_patient.count();
+   // qDebug()<<"directorio del paciente: "<<patientSession<< "y numnero de archivos" <<dir_patient.count();
     QFileInfoList list_tests=dir_patient.entryInfoList();
     for(int i=0;i<dir_patient.count();i++)
     {
-        qDebug()<<"comparamos: "<<list_tests[i].baseName()<<" con "<<test_comprobar;
+        //qDebug()<<"comparamos: "<<list_tests[i].baseName()<<" con "<<test_comprobar;
         if (list_tests[i].baseName().contains(test_comprobar,Qt::CaseInsensitive)) //si ya esta preguntamos y borramos
         {
-            qDebug()<<"test que borrar: "<<list_tests[i].absoluteFilePath();
+          //  qDebug()<<"test que borrar: "<<list_tests[i].absoluteFilePath();
             return list_tests[i].absoluteFilePath();
         }
     }
@@ -464,16 +464,16 @@ void OData::exportFolder(QString originalDir, QString saveDir){
   */
 QStringList OData:: checkAllTest(QStringList TestsDone){
     QStringList NoDoneTest;
-    qDebug()<<"START: "<<Q_FUNC_INFO;
+   // qDebug()<<"START: "<<Q_FUNC_INFO;
     for (int i=0;i<m_testPathology.length();i++){
-        qDebug()<<"Esta la prueba "<<m_testPathology.at(i)<<" en los test realizados?";
+     //   qDebug()<<"Esta la prueba "<<m_testPathology.at(i)<<" en los test realizados?";
         for (int j=0;j<TestsDone.length();j++){
             if(TestsDone.at(j).contains(m_testPathology.at(i))){
-                qDebug()<<"El test "<<m_testPathology.at(i)<< " Se ha realizado en la session del paciente";
+       //         qDebug()<<"El test "<<m_testPathology.at(i)<< " Se ha realizado en la session del paciente";
                 break;
             }else{
                 if (j == TestsDone.length()-1){
-                qDebug()<<"Los test realizados no contienen el test:"<<m_testPathology.at(i);
+         //       qDebug()<<"Los test realizados no contienen el test:"<<m_testPathology.at(i);
                 NoDoneTest.push_back(getTitle(m_testPathology.at(i)));
                 }
             }
