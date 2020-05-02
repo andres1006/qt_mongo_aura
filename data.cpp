@@ -5,13 +5,13 @@
 
 ///// ODATA
 OData::OData(QObject *parent) : QObject(parent){
-    qDebug()<<"Step 0";
+    //qDebug()<<"Step 0";
        //m_versions = new OVersions();
-    qDebug()<<"Step 1";
+    //qDebug()<<"Step 1";
         m_age = 0;
-    qDebug()<<"Step 2";
+    //qDebug()<<"Step 2";
         m_headTremor=false;
-    qDebug()<<"Step 3";
+    //qDebug()<<"Step 3";
 }
 
 //Oscann 4.0.9 const int OData::open(){

@@ -18,11 +18,16 @@ SOURCES += \
 
 
 
+#LIBS += \
+#    -L/usr/local/lib \
+#    -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_videoio -lopencv_imgcodecs \
+#    -lmongocxx \
+#    -lbsoncxx \
+
 LIBS += \
-    -L/usr/local/lib \
-    -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_videoio -lopencv_imgcodecs \
-    -lmongocxx \
-    -lbsoncxx \
+     -L/usr/include \
+     -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_videoio -lmongocxx -lbsoncxx \
+
 
 HEADERS += \
     aurajson.h \
