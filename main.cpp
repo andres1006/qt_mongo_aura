@@ -97,7 +97,7 @@ Prueba subida datos a Mongo DB: los archivos necesarios para esta parte son: log
     data->setTstFileName(argv[2]); // datos de la prueba
     data->open(0);
     data->importCsv();
-    //qDebug()<<"m_processedData.size() =";
+    qDebug()<<"m_processedData.size() =";
     //qDebug()<<data->dataSize();
     procesamiento->sendToDB(data,argv[3],argv[4],"localhost",27017);// argv 3 => nombre del paciente, argv 4 nombre de la prueba
 
