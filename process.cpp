@@ -37,7 +37,7 @@ void process::sendToDB(OData *data, QString sessionName, QString testName, QStri
         arrStimulusY.clear();
 
         //MONGO(End)
-        //qDebug()<<"Step -1";
+        qDebug()<<"Step -1";
         //qDebug()<<data->dataSize();
         for(int i=0;i<data->dataSize();i++){
             //qDebug()<<"Step 0 ";
@@ -67,13 +67,17 @@ void process::sendToDB(OData *data, QString sessionName, QString testName, QStri
             //stream<<data->m_processedData[i].valid()<<endl;
              //qDebug()<<"Step 1";
         }
-        //qDebug()<<"Step 2";
+        qDebug()<<"Step 2";
 
         //mongocxx::client client(mongocxx::uri(QString("mongodb://oscann:CuevaErikSilviaPablo@%1:%2/?authSource=admin&authMechanism=SCRAM-SHA-1").arg(mongoUrl).arg(mongoPort).toLatin1().data()));
-        mongocxx::client client(mongocxx::uri("mongodb://localhost:27017"));
-        //qDebug()<<"Step 3";
+        // mongocxx::client client(mongocxx::uri("mongodb://localhost:27017"));
+        mongocxx::uri uri("mongodb://localhost:27017");
+        qDebug()<<"Step 2.5";
+        mongocxx::client client(uri);
+        qDebug()<<"Step 3";
         auto db = client["tests"];
-        //qDebug()<<"Step 4";
+        // qDebug()<<"Step 4: "<<testName[0];
+
         if(testName[0] == 'T'){
            // qDebug()<<"Step 4.1";
             if(testName.mid(0,4).compare("TASV") == 0)
@@ -126,7 +130,7 @@ void process::sendToDB(OData *data, QString sessionName, QString testName, QStri
                     << bsoncxx::builder::stream::finalize;
             bsoncxx::document::view view = doc_value.view();
             bsoncxx::stdx::optional<mongocxx::result::insert_one> result = coll.insert_one(view);
-           // qDebug()<<"Step 5";
+           qDebug()<<"Step 5";
         }
     }catch (mongocxx::exception &e) {
         std::cerr << "MONGO ERROR: "<<e.what()<<"\n";

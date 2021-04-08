@@ -359,7 +359,6 @@ void OData::importCsv(){
             //qDebug()<<atof(elements[0].replace(".",QLocale().decimalPoint()).toLatin1().data());
             //qDebug()<<m_processedData.size();
             line = qTS.readLine();
-            //qDebug()<<Q_FUNC_INFO<<" line: "<<line;
         }
     }
 

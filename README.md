@@ -1,1 +1,2 @@
-# qt_mongo_aura
+**Ejecutar el comando**
+# node prueba.js

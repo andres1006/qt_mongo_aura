@@ -69,6 +69,7 @@ Prueba subida datos a Mongo DB: los archivos necesarios para esta parte son: log
     OData *data = new OData();
     process *procesamiento = new process();
 
+    mongocxx::instance instance{}; // This should be done only once.
     data->setClbFileName(argv[1]); // datos de la calibración asociada a una prueba.
     data->setTstFileName(argv[2]); // datos de la prueba
     data->open(0);
